@@ -39,6 +39,26 @@ html, body {
   height: 100%;
 }
 
+.HolyGrail-nav, .HolyGrail-ads {
+  /* 12em is the width of the columns */
+  flex: 0 0 12em;
+}
+
+.HolyGrail-nav {
+  /* put the nav on the left */
+  order: -1;
+}
+
+.HolyGrail-nav2, .HolyGrail-ads2 {
+  /* 12em is the width of the columns */
+  flex: 0 0 12em;
+}
+
+.HolyGrail-nav2 {
+  /* put the nav on the left */
+  order: 1;
+}
+
 .detail-image {
   width: 90%;
 }
@@ -123,20 +143,18 @@ html, body {
   flex-direction: column;
 }
 
-.hidden-detail .detail-image-container {
-  display: none;
+.fot {
+  display: block;
+  margin: 0;
+  text-align: center;
+  padding: 1.5rem;
+  background: #404040;
+  color: #999;
+  font-size: .85em;
+  overflow-x: hidden;
 }
 
-.hidden-detail .thumnail-list {
-  align-items: center;
-  flex-direction: column;
-}
-
-.hidden-detail .thumbnail-item {
-  max-width: 80%;
-}
-
-@media all and (min-width: 720px) {
+@media all and (orientation: landscape) {
   .main-content {
     flex-direction: row;
     overflow: hidden;
