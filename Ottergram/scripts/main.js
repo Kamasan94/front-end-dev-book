@@ -3,6 +3,8 @@ var DETAIL_TITLE_SELECTOR = '[data-image-role="title"]';
 var THUMBNAIL_LINK_SELECTOR = '[data-image-role="trigger"]';
 var HIDDEN_DETAIL_CLASS = 'hidden-detail';
 var ESC_KEY = 27;
+var DETAIL_FRAME_SELECTOR = '[data-image-role="frame"]';
+var TINY_EFFECT_CLASS = 'is-tiny'
 
 var firstThumbnail = document.querySelector(THUMBNAIL_LINK_SELECTOR);
 firstThumbnail.addEventListener('click', function() {
@@ -94,7 +96,12 @@ function addKeyPressHandler() {
 
 function showDetails() {
   'use strict';
+  var frame = document.querySelector(DETAIL_FRAME_SELECTOR);
   document.body.classList.remove(HIDDEN_DETAIL_CLASS);
+  frame.classList.add(TINY_EFFECT_CLASS);
+  setTimeout(function () {
+    frame.classList.remove(TINY_EFFECT_CLASS);
+  }, 50);
 }
 
 function initializeEvents() {
