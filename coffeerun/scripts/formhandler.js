@@ -4,6 +4,8 @@
 
   var $ = window.jQuery;
 
+
+
   function FormHandler(selector) {
     if (!selector) {
       throw new Error('No selector provided');
@@ -25,15 +27,22 @@
       });
       console.log(data);
       fn(data);
-      
-      $('#achievementModal').modal('toggle');
+
+      //if(data['strength']>75 && data['size'] == 'zilla' && data['flavor'] != '')
+        $('#achievementModal').modal('toggle');
+
+      $('#achievementAccepted').on('click', function (event) {
+        event.preventDefault();
+        myTrofei.add(data['emailAddress'])
+        console.log(myTrofei);
+      });
 
       this.reset();
       $('.strengthValue').text($(this).serializeArray()[4].value);
       this.elements[0].focus();
     });
 
-    this.$formElement.change(function () {
+      this.$formElement.change(function () {
       var array = $(this).serializeArray();
       var color;
       var strength = $(this).serializeArray()[4].value;
@@ -49,7 +58,6 @@
           color = 'red';
           break;
       }
-      console.log($('.strengthValue'));
       $('.strengthValue').css('color', color);
       $('.strengthValue').text($(this).serializeArray()[4].value);
     })
@@ -57,6 +65,17 @@
     this.$formElement.on('reset', function (event) {
         $('.strengthValue').text(38);
       });
+
+
+    $('#emailInput').change(function () {
+      myTrofei.emails.forEach( function(item) {
+        if (item == $('#emailInput').text) {
+          console.log('abbiamolo');
+        }
+      });
+
+    })
+
   }
 
   App.FormHandler = FormHandler;

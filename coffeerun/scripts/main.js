@@ -5,6 +5,11 @@
   var Truck = App.Truck;
   var DataStore = App.DataStore;
   var FormHandler = App.FormHandler;
+  var Trofei = App.Trofei;
+
+  var myTrofei = new Trofei();
+
+  window.myTrofei = myTrofei;
 
   var myTruck = new Truck('KITT', new DataStore());
   window.myTruck = myTruck;
@@ -15,5 +20,7 @@
   console.log(formhandler);
 
   $('.strengthValue').text
+
+
 
 })(window);
