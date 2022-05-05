@@ -17,7 +17,6 @@
   var formhandler = new FormHandler(FORM_SELECTOR);
 
   formhandler.addSubmitHandler(myTruck.createOrder.bind(myTruck));
-  console.log(formhandler);
 
   $('.strengthValue').text
 

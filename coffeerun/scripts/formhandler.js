@@ -60,21 +60,19 @@
       }
       $('.strengthValue').css('color', color);
       $('.strengthValue').text($(this).serializeArray()[4].value);
+
+      myTrofei.emails.forEach( function(item) {
+        if (item == $('#emailInput')[0].value) {
+          $('#powerContainer').removeClass('invisible');
+        }
+      });
+
     })
 
     this.$formElement.on('reset', function (event) {
         $('.strengthValue').text(38);
       });
 
-
-    $('#emailInput').change(function () {
-      myTrofei.emails.forEach( function(item) {
-        if (item == $('#emailInput').text) {
-          console.log('abbiamolo');
-        }
-      });
-
-    })
 
   }
 
