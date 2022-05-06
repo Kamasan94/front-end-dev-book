@@ -28,7 +28,7 @@
       console.log(data);
       fn(data);
 
-      //if(data['strength']>75 && data['size'] == 'zilla' && data['flavor'] != '')
+      if(data['strength']>75 && data['size'] == 'zilla' && data['flavor'] != '')
         $('#achievementModal').modal('toggle');
 
       $('#achievementAccepted').on('click', function (event) {
@@ -52,7 +52,7 @@
           color = 'green';
           break;
         case strength>25 && strength<75:
-          color = 'yellow';
+          color = 'orange';
           break;
         case strength > 75:
           color = 'red';

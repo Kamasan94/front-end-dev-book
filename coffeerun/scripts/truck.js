@@ -2,9 +2,24 @@
   'use strict';
   var App = window.App || {};
 
+  var FORM_SELECTOR = '[data-coffee-order="form"]';
+
   function Truck(truckId, db) {
     this.truckId = truckId;
     this.db = db;
+  }
+
+  Truck.prototype.loadForm = function(customerId) {
+    console.log('ciao');
+    var order = this.db.get(customerId);
+    var $formElement = $(FORM_SELECTOR);
+    console.log($formElement);
+    $formElement[0][0].value = order['coffee'];
+    $formElement[0][1].value = order['emailAddress'];
+    $formElement[0][2].value = order['flavor'];
+    $formElement[0][3].value = order['power'];
+    $formElement[0][4].value = order['size'];
+    $formElement[0][5].value = order['strength'];
   }
 
   Truck.prototype.createOrder = function (order) {
