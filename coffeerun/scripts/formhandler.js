@@ -16,6 +16,38 @@
     }
   }
 
+  FormHandler.prototype.addInputHandler = function (fn) {
+    this.$formElement.on('input', '[name="emailAddress"]', function(event) {
+      var emailAddress = event.target.value;
+      var message = '';
+      if (fn(emailAddress)) {
+        event.target.setCustomValidity('');
+      }
+      else {
+        message = emailAddress + ' is not authorized email address!'
+        event.target.setCustomValidity(message);
+      }
+      console.log(fn(emailAddress));
+    });
+
+
+  };
+
+  FormHandler.prototype.addInputHandler2 = function (fn) {
+
+    this.$formElement.on('input', '[name="coffee"]', function(event) {
+      console.log($('[name="coffee"]')[0].value);
+      console.log($('[name="strength"]')[0].value);
+      console.log(fn($('[name="coffee"]')[0].value,$('[name="strength"]')[0].value));
+    });
+
+    this.$formElement.on('input', '[name="strength"]', function(event) {
+      console.log($('[name="coffee"]')[0].value);
+      console.log($('[name="strength"]')[0].value);
+      console.log(fn($('[name="coffee"]')[0].value,$('[name="strength"]')[0].value));
+    });
+  };
+
   FormHandler.prototype.addSubmitHandler = function (fn) {
     console.log('Setting submit handler for form');
     this.$formElement.on('submit', function (event) {

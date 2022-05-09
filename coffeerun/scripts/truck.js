@@ -16,20 +16,34 @@
     console.log($formElement);
     $formElement[0][0].value = order['coffee'];
     $formElement[0][1].value = order['emailAddress'];
-    $formElement[0][2].value = order['flavor'];
-    $formElement[0][3].value = order['power'];
-    $formElement[0][4].value = order['size'];
-    $formElement[0][5].value = order['strength'];
+    $formElement[0][6].value = order['flavor'];
+    switch (order['size']) {
+      case 'short':
+          $formElement[0][2].checked = 'true';
+          break;
+      case 'tall':
+          $formElement[0][3].checked = 'true';
+          break;
+      case 'grande':
+          $formElement[0][4].checked = 'true';
+          break;
+      case 'zilla':
+          $formElement[0][5].checked = 'true';
+          break;
+    }
+
+    $formElement[0][7].value = order['strength'];
+    $('.strengthValue').text(order['strength']);
   }
 
   Truck.prototype.createOrder = function (order) {
     console.log('Adding order for ' + order.emailAddress);
-    this.db.add(order.emailAddress, order);
+    return this.db.add(order.emailAddress, order);
   }
 
   Truck.prototype.deliverOrder = function (customerId) {
     console.log('Delivering order for ' + customerId);
-    this.db.remove(customerId);
+    return this.db.remove(customerId);
   }
 
   Truck.prototype.printOrders = function () {
