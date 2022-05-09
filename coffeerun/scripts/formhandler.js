@@ -58,7 +58,11 @@
         console.log(item.name + ' is ' + item.value)
       });
       console.log(data);
-      fn(data);
+      fn(data)
+        .then(function () {
+          this.reset();
+          this.elements[0].focus();
+        }.bind(this));
 
       if(data['strength']>75 && data['size'] == 'zilla' && data['flavor'] != '')
         $('#achievementModal').modal('toggle');

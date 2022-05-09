@@ -107,8 +107,10 @@
               });
 
             setTimeout(function() {
-              this.removeRow(email);
-              fn(email);
+              fn(email)
+                .then(function() {
+                  this.removeRow(email);
+                }.bind(this));
             }.bind(this),2000);
           }
           else{

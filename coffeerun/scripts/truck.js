@@ -4,9 +4,10 @@
 
   var FORM_SELECTOR = '[data-coffee-order="form"]';
 
-  function Truck(truckId, db) {
+  function Truck(truckId, db, localdb) {
     this.truckId = truckId;
     this.db = db;
+    this.localdb = localdb;
   }
 
   Truck.prototype.loadForm = function(customerId) {
@@ -38,7 +39,13 @@
 
   Truck.prototype.createOrder = function (order) {
     console.log('Adding order for ' + order.emailAddress);
-    return this.db.add(order.emailAddress, order);
+    return this.db.add(order.emailAddress, order)
+      .then(function() {
+
+      },
+      function() {
+        this.localdb.add(order.emailAddress, order);
+      }.bind(this));
   }
 
   Truck.prototype.deliverOrder = function (customerId) {
@@ -46,15 +53,38 @@
     return this.db.remove(customerId);
   }
 
-  Truck.prototype.printOrders = function () {
-    var customerArray = Object.keys(this.db.getAll());
+  Truck.prototype.printOrders = function (printFn) {
+    var response = this.db.getAll();
+    console.log(response);
+    if (response.status_text = 'error'){
+      return this.db.getAll()
+        .then(function (orders) {
+          var customerArray = Object.keys(orders);
 
-    console.log('Truck #' + this.truckId + ' has pending orders:');
-    customerArray.forEach(function (id) {
-      console.log(this.db.get(id));
-    }.bind(this));
+          console.log('Truck #' + this.truckId + ' has pending orders:');
+          customerArray.forEach(function (id) {
+            console.log(orders[id]);
+            if( printFn) {
+              printFn(orders[id]);
+            }
+          }.bind(this));
+        }.bind(this));
+    }
+    else {
+      return this.localdb.getAll()
+        .then(function (orders) {
+          var customerArray = Object.keys(orders);
 
+          console.log('Truck #' + this.truckId + ' has pending orders:');
+          customerArray.forEach(function (id) {
+            console.log(orders[id]);
+            if( printFn) {
+              printFn(orders[id]);
+            }
+          }.bind(this));
+        }.bind(this));
   }
+}
 
   App.Truck = Truck;
   window.App = App;

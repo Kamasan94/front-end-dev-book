@@ -17,10 +17,11 @@
   var myTrofei = new Trofei();
   var checkList = new CheckList(CHECKLIST_SELECTOR);
   var remoteDS = new RemoteDataStore(SERVER_URL);
-  
+  var localDs = new DataStore();
+
   window.myTrofei = myTrofei;
 
-  var myTruck = new Truck('KITT', new DataStore());
+  var myTruck = new Truck('KITT', remoteDS, localDs);
   window.myTruck = myTruck;
 
   checkList.addClickHandler(myTruck.deliverOrder.bind(myTruck));
@@ -31,12 +32,20 @@
 
   //formhandler.addSubmitHandler(myTruck.createOrder.bind(myTruck));
   formhandler.addSubmitHandler(function (data) {
-    myTruck.createOrder.call(myTruck,data);
-    checkList.addRow.call(checkList,data);
+    return myTruck.createOrder.call(myTruck,data)
+      .then(function() {
+        checkList.addRow.call(checkList,data);
+      },
+      function () {
+        alert('Server unreachable, switching to local database');
+      }
+    )
   });
 
   formhandler.addInputHandler(Validation.isCompanyEmail);
   formhandler.addInputHandler2(Decaf.isDecaf);
+
+  myTruck.printOrders(checkList.addRow.bind(checkList));
 
   webshim.polyfill('forms forms-ext');
   webshim.setOptions('forms', {addValidators: true, lazyCustomMessages: true});
