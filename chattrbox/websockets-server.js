@@ -4,6 +4,8 @@ var wss = new WebSocketServer({
   port: port
 });
 
+var chatBotId;
+
 var chatClient = require('./chatbot');
 
 //Log of old messages
@@ -24,29 +26,17 @@ wss.on('connection', function connection(ws, req) {
   ws.id = wss.getUniqueID();
   ws.isEnabled = false;
 
-  if (ws.upgradeReq != null) {
-    if(ws.upgradeReq.url.toString().includes('chatbot')) {
+  if (req != null) {
+    if(req.url.includes('chatbot')) {
       ws.isEnabled = true;
+      chatBotId = ws.id;
     }
   }
 
-
-
   ws.on('message', function(data) {
 
-    if (ws.upgradeReq != null) {
-      if(ws.upgradeReq.url.toString().includes('chatbot')) {
-        ws.isEnabled = true;
-        messages.push(data);
-        wss.clients.forEach(function (clientSocket) {
-          clientSocket.send(data);
-        })
-      }
-    }
 
-
-
-    console.log('message received: ' + data);
+  console.log('message received: ' + data);
     if (data == 'pesce') {
       ws.isEnabled = true;
       messages.forEach(function (msg) {
@@ -55,10 +45,20 @@ wss.on('connection', function connection(ws, req) {
     }
 
     if (ws.isEnabled) {
-      messages.push(data);
-      wss.clients.forEach(function (clientSocket) {
-        clientSocket.send(data);
-      })
+      if(data.toString().substring(0,4) == 'Jinx') {
+        wss.clients.forEach(function each(client) {
+          if (client.id == chatBotId) {
+            client.send(data);
+          }
+        })
+      }
+      else {
+        messages.push(data);
+        wss.clients.forEach(function (clientSocket) {
+          clientSocket.send(data);
+        })
+      }
+
     }
     else {
       wss.clients.forEach(function each(client) {
