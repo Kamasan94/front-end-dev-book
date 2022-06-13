@@ -12,16 +12,30 @@
   },
   "browserify": {
     "transform": [
-      ["babelify", {"presets": ["es2015"], "sourceMap": true}]
+      [
+        "babelify",
+        {
+          "presets": [
+            "@babel/preset-env"
+          ],
+          "sourceMap": true
+        }
+      ]
     ]
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "nodemon": "^2.0.16"
+    "@babel/preset-env": "^7.18.2",
+    "babel-loader": "^7",
+    "crypto-js": "^4.1.1",
+    "jquery": "^3.6.0",
+    "moment": "^2.29.3"
   },
   "dependencies": {
     "mime": "^3.0.0",
+    "nodemon": "^2.0.16",
+    "uuid": "^8.3.2",
     "ws": "^8.6.0"
   }
 }

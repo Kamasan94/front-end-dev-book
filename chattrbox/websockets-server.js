@@ -37,13 +37,14 @@ wss.on('connection', function connection(ws, req) {
 
 
   console.log('message received: ' + data);
-    if (data == 'pesce') {
+    /*if (data == 'pesce') {
       ws.isEnabled = true;
       messages.forEach(function (msg) {
         ws.send(msg);
       });
     }
-
+    */
+    ws.isEnabled = true;
     if (ws.isEnabled) {
       if(data.toString().substring(0,4) == 'Jinx') {
         wss.clients.forEach(function each(client) {
@@ -55,7 +56,7 @@ wss.on('connection', function connection(ws, req) {
       else {
         messages.push(data);
         wss.clients.forEach(function (clientSocket) {
-          clientSocket.send(data);
+          clientSocket.send(String(data));
         })
       }
 
